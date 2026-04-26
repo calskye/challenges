@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hike to Half Moon Bay from Stanford Campus</title>
+  <title>23 mile hike to Half Moon Bay from Stanford</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -13,43 +13,96 @@
   <script src="https://unpkg.com/leaflet-gpx/gpx.js"></script>
 
   <style>
-    body { margin: 0; }
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
 
-  #map {
-    height: 100vh;
-  }
+    #container {
+      display: flex;
+      height: 100vh;
+    }
 
-  #title {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
+    #map {
+      flex: 2;
+    }
 
-    background: rgba(255,255,255,0.9);
-    padding: 8px 16px;
-    border-radius: 8px;
+    #sidebar {
+      flex: 1;
+      overflow-y: scroll;
+      padding: 15px;
+      background: #f7f7f7;
+      border-left: 1px solid #ddd;
+    }
 
-    font-family: sans-serif;
-  }
+    #sidebar h2 {
+      margin-top: 0;
+    }
+
+    #sidebar img {
+      width: 100%;
+      margin-bottom: 12px;
+      border-radius: 8px;
+    }
+
+    #title {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+
+      background: rgba(255,255,255,0.9);
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: bold;
+    }
   </style>
 </head>
+
 <body>
 
-<h1 id="title">23 mile hike to Half Moon Bay from Stanford Campus</h1>
-<div id="map"></div>
+<div id="title">My 23 mile hike to Half Moon Bay from Stanford</div>
+
+<div id="container">
+  <div id="map"></div>
+
+  <div id="sidebar">
+    <h2>Photos</h2>
+
+    <img src="bakery_image.jpeg" alt="Ridge view">
+    <p>Started off our hike with pastries, of course!</p>
+
+    <img src="slug_image.jpeg" alt="Lake stop">
+    <p>Banana slug!</p>
+
+    <img src="salamander_image.jpeg" alt="Summit">
+    <p>First ever IRL salamander sighting!</p>
+
+    <img src="hmb_image.jpeg" alt="Summit">
+    <p>Finally made it 22 miles later!</p>
+
+    <img src="cookie_image.jpeg" alt="Summit">
+    <p>Funny looking owl cookies found in HMB!</p>
+  </div>
+</div>
 
 <script>
   var map = L.map('map');
 
-  // Topographic layer
+  // Topographic map layer
   L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenTopoMap'
   }).addTo(map);
 
-  // Load your GPX file
-  new L.GPX("Morning_Walk.gpx", {
+  // Load GPX route
+  new L.GPX("hike.gpx", {
     async: true,
+    polyline_options: {
+      color: "red",
+      weight: 4
+    },
     marker_options: {
       startIconUrl: null,
       endIconUrl: null,
@@ -59,6 +112,10 @@
     map.fitBounds(e.target.getBounds());
   }).addTo(map);
 
+  // Example photo marker (edit coordinates)
+  L.marker([37.123, -122.456])
+    .addTo(map)
+    .bindPopup("<img src='images/photo1.jpg' width='200'><br>Ridge view");
 </script>
 
 </body>
