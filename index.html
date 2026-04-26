@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My 24-Mile Hike</title>
+  <title>Hike to Half Moon Bay from Stanford Campus</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -14,11 +14,29 @@
 
   <style>
     body { margin: 0; }
-    #map { height: 100vh; }
+
+  #map {
+    height: 100vh;
+  }
+
+  #title {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+
+    background: rgba(255,255,255,0.9);
+    padding: 8px 16px;
+    border-radius: 8px;
+
+    font-family: sans-serif;
+  }
   </style>
 </head>
 <body>
 
+<h1 id="title">23 mile hike to Half Moon Bay from Stanford Campus</h1>
 <div id="map"></div>
 
 <script>
@@ -40,6 +58,7 @@
   }).on('loaded', function(e) {
     map.fitBounds(e.target.getBounds());
   }).addTo(map);
+
 </script>
 
 </body>
