@@ -28,7 +28,6 @@
     #map {
       flex: 2;
       height: 100%;
-      min-height: 100vh;
     }
 
     #sidebar {
@@ -39,52 +38,37 @@
       border-left: 1px solid #ddd;
     }
 
-    #sidebar h2 {
-      margin-top: 0;
-    }
-
     #sidebar img {
       width: 100%;
       margin-bottom: 12px;
       border-radius: 8px;
     }
 
-    /* Title */
     #title {
       position: absolute;
       bottom: 20px;
       left: 20px;
       z-index: 1000;
-
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255,255,255,0.8);
       padding: 14px 20px;
       border-radius: 12px;
-
       font-size: 28px;
       font-weight: bold;
       color: hotpink;
     }
 
-    /* Back button */
     #back-button {
       position: absolute;
       top: 20px;
       right: 20px;
       z-index: 1000;
-
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255,255,255,0.9);
       padding: 10px 14px;
       border-radius: 8px;
-
       text-decoration: none;
       font-weight: bold;
       color: black;
-
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    #back-button:hover {
-      background: white;
     }
   </style>
 </head>
@@ -93,7 +77,7 @@
 
 <div id="title">My 23 mile hike to Half Moon Bay from Stanford</div>
 
-<!-- Goes back to homepage -->
+<!-- IMPORTANT: go up one level to reach index.html -->
 <a href="../index.html" id="back-button">← Back</a>
 
 <div id="container">
@@ -117,20 +101,16 @@
 </div>
 
 <script>
-  // Initialize map
   var map = L.map('map').setView([37.4, -122.2], 10);
 
-  // Topographic layer
   L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenTopoMap'
   }).addTo(map);
 
-  // Fix rendering
   window.addEventListener('load', () => {
     map.invalidateSize();
   });
 
-  // Load GPX route
   new L.GPX("hmb_hike/Morning_Walk.gpx", {
     async: true,
     polyline_options: {
@@ -144,16 +124,7 @@
     }
   }).on('loaded', function(e) {
     map.fitBounds(e.target.getBounds());
-
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 200);
   }).addTo(map);
-
-  // Example marker
-  L.marker([37.123, -122.456])
-    .addTo(map)
-    .bindPopup("<img src='hmb_hike/slug_image.jpeg' width='200'><br>Ridge view");
 </script>
 
 </body>
