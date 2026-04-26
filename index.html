@@ -1,135 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>23 mile hike to Half Moon Bay from Stanford</title>
+  <title>My Challenge Tracker</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-  <!-- GPX plugin -->
-  <script src="https://unpkg.com/leaflet-gpx/gpx.js"></script>
-
   <style>
-    html, body {
-  margin: 0;
-  height: 100%;
-  font-family: sans-serif;
-}
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+    }
 
-#container {
-  display: flex;
-  height: 100vh;
-  width: 100%;
-}
+    header {
+      background: black;
+      color: white;
+      padding: 20px;
+      font-size: 28px;
+    }
 
-#map {
-  flex: 2;
-  height: 100%;
-  min-height: 100vh;
-}
+    .container {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
 
-#sidebar {
-  flex: 1;
-  overflow-y: scroll;
-  padding: 15px;
-  background: #f7f7f7;
-  border-left: 1px solid #ddd;
-}
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-decoration: none;
+      color: black;
+      transition: transform 0.2s;
+    }
 
-#sidebar h2 {
-  margin-top: 0;
-}
+    .card:hover {
+      transform: scale(1.03);
+    }
 
-#sidebar img {
-  width: 100%;
-  margin-bottom: 12px;
-  border-radius: 8px;
-}
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+    }
 
-/* UPDATED TITLE */
-#title {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  z-index: 1000;
-
-  background: rgba(255, 255, 255, 0.8);
-  padding: 14px 20px;
-  border-radius: 12px;
-
-  font-size: 28px;
-  font-weight: bold;
-  color: hotpink;
-}
+    .card h3 {
+      margin: 10px 0 5px;
+    }
   </style>
 </head>
 
 <body>
 
-<div id="title">My 23 mile hike to Half Moon Bay from Stanford</div>
+<header>My Challenge Tracker</header>
 
-<div id="container">
-  <div id="map"></div>
+<div class="container">
 
-  <div id="sidebar">
-    <h2>Photos</h2>
+  <a class="card" href="challenges/hike-half-moon-bay.html">
+    <img src="challenges/hmb_image.jpeg">
+    <h3>23 Mile Hike to Half Moon Bay</h3>
+    <p>Stanford → HMB</p>
+  </a>
 
-    <img src="slug_image.jpeg" alt="Lake stop">
-    <p>Banana slug!</p>
+  <!-- Add more cards here later -->
+  <!--
+  <a class="card" href="challenges/project1.html">
+    <img src="images/project.jpg">
+    <h3>Build a Drone</h3>
+    <p>Engineering project</p>
+  </a>
+  -->
 
-    <img src="salamander_image.jpeg" alt="Summit">
-    <p>First ever IRL salamander sighting!</p>
-
-    <img src="hmb_image.jpeg" alt="Summit">
-    <p>Finally made it 22 miles later!</p>
-
-    <img src="cookie_image.jpeg" alt="Summit">
-    <p>Funny looking owl cookies found in HMB!</p>
-  </div>
 </div>
-
-<script>
-  // Initialize map with default view (important!)
-  var map = L.map('map').setView([37.4, -122.2], 10);
-
-  // Topographic map layer
-  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenTopoMap'
-  }).addTo(map);
-
-  // Force correct rendering after load
-  window.addEventListener('load', () => {
-    map.invalidateSize();
-  });
-
-  // Load GPX route
-  new L.GPX("Morning_Walk.gpx", {
-    async: true,
-    polyline_options: {
-      color: "red",
-      weight: 4
-    },
-    marker_options: {
-      startIconUrl: null,
-      endIconUrl: null,
-      shadowUrl: null
-    }
-  }).on('loaded', function(e) {
-    map.fitBounds(e.target.getBounds());
-
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 200);
-  }).addTo(map);
-
-  // Example photo marker
-  L.marker([37.123, -122.456])
-    .addTo(map)
-    .bindPopup("<img src='images/photo1.jpg' width='200'><br>Ridge view");
-</script>
 
 </body>
 </html>

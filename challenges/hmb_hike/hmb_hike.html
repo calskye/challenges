@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>23 mile hike to Half Moon Bay from Stanford</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- GPX plugin -->
+  <script src="https://unpkg.com/leaflet-gpx/gpx.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: sans-serif;
+    }
+
+    #container {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+
+    #map {
+      flex: 2;
+      height: 100%;
+      min-height: 100vh;
+    }
+
+    #sidebar {
+      flex: 1;
+      overflow-y: scroll;
+      padding: 15px;
+      background: #f7f7f7;
+      border-left: 1px solid #ddd;
+    }
+
+    #sidebar h2 {
+      margin-top: 0;
+    }
+
+    #sidebar img {
+      width: 100%;
+      margin-bottom: 12px;
+      border-radius: 8px;
+    }
+
+    /* Title */
+    #title {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+
+      background: rgba(255, 255, 255, 0.8);
+      padding: 14px 20px;
+      border-radius: 12px;
+
+      font-size: 28px;
+      font-weight: bold;
+      color: hotpink;
+    }
+
+    /* Back button */
+    #back-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 14px;
+      border-radius: 8px;
+
+      text-decoration: none;
+      font-weight: bold;
+      color: black;
+
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    #back-button:hover {
+      background: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="title">My 23 mile hike to Half Moon Bay from Stanford</div>
+
+<a href="../index.html" id="back-button">← Back</a>
+
+<div id="container">
+  <div id="map"></div>
+
+  <div id="sidebar">
+    <h2>Photos</h2>
+
+    <img src="hmb_hike/slug_image.jpeg" alt="Lake stop">
+    <p>Banana slug!</p>
+
+    <img src="hmb_hike/salamander_image.jpeg" alt="Summit">
+    <p>First ever IRL salamander sighting!</p>
+
+    <img src="hmb_hike/hmb_image.jpeg" alt="Summit">
+    <p>Finally made it 22 miles later!</p>
+
+    <img src="hmb_hike/cookie_image.jpeg" alt="Summit">
+    <p>Funny looking owl cookies found in HMB!</p>
+  </div>
+</div>
+
+<script>
+  // Initialize map
+  var map = L.map('map').setView([37.4, -122.2], 10);
+
+  // Topographic map layer
+  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenTopoMap'
+  }).addTo(map);
+
+  // Fix rendering
+  window.addEventListener('load', () => {
+    map.invalidateSize();
+  });
+
+  // Load GPX route
+  new L.GPX("hmb_hike/Morning_Walk.gpx", {
+    async: true,
+    polyline_options: {
+      color: "red",
+      weight: 4
+    },
+    marker_options: {
+      startIconUrl: null,
+      endIconUrl: null,
+      shadowUrl: null
+    }
+  }).on('loaded', function(e) {
+    map.fitBounds(e.target.getBounds());
+
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 200);
+  }).addTo(map);
+
+  // Example marker
+  L.marker([37.123, -122.456])
+    .addTo(map)
+    .bindPopup("<img src='hmb_hike/slug_image.jpeg' width='200'><br>Ridge view");
+</script>
+
+</body>
+</html>
